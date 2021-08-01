@@ -5,9 +5,11 @@ import java.util.List;
 import com.example.portfolio.model.Socials;
 import com.example.portfolio.service.SocialsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +54,26 @@ public class PortfolioController {
 	@PostMapping(path = "/socials")
 	public Socials addSocials(@RequestBody Socials socials) {
 		return this.socialsService.addSocials(socials);
+	}
+
+	/**
+	 *
+	 * @param socials update to social handle
+	 * @return updated social handle
+	 */
+	@PutMapping(path = "/socials")
+	public Socials updateSocials(@RequestBody Socials socials) {
+		return this.socialsService.updateSocials(socials);
+	}
+
+	/**
+	 *
+	 * @param socialId key to social handle to be deleted
+	 * @return deleted social handle
+	 */
+	@DeleteMapping("/socials/{socialId}")
+	public Socials deleteSocials(@PathVariable String socialId) {
+		return  this.socialsService.deleteSocials(socialId);
 	}
 
 }

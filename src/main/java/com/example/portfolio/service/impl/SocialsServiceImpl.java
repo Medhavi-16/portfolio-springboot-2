@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.example.portfolio.model.Socials;
 import com.example.portfolio.service.SocialsService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,5 +43,37 @@ public class SocialsServiceImpl implements SocialsService {
 	public Socials addSocials(Socials socials) {
 		this.socials.add(socials);
 		return socials;
+	}
+
+	@Override
+	public Socials updateSocials(Socials social) {
+		for(Socials socials: this.socials) {
+
+			if(socials.getSocialName().equals(social.getSocialName()))
+			{
+				socials.setSocialBase(social.getSocialBase());
+				socials.setSocialUsername(social.getSocialUsername());
+				return socials;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public Socials deleteSocials(String socialId) {
+		Socials deletedSocials = null;
+		for(Socials socials: this.socials)
+		{
+			if(socials.getSocialName().equalsIgnoreCase(socialId)) {
+				deletedSocials = socials;
+				break;
+			}
+		}
+
+		if(deletedSocials != null)
+			this.socials.remove(deletedSocials);
+
+		return  deletedSocials;
 	}
 }

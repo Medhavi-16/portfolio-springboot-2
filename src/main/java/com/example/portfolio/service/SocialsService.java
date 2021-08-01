@@ -12,5 +12,9 @@ public interface SocialsService {
 
 	public Socials addSocials(Socials socials);
 
+	public Socials updateSocials(Socials socials);
+
+	public Socials deleteSocials(String socialId);
+
 
 }

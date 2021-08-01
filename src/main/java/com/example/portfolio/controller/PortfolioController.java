@@ -1,0 +1,57 @@
+package com.example.portfolio.controller;
+
+import java.util.List;
+
+import com.example.portfolio.model.Socials;
+import com.example.portfolio.service.SocialsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class PortfolioController {
+
+	@Autowired
+	private SocialsService socialsService;
+
+	/**
+	 * This is the landing page
+	 * @return
+	 */
+	@GetMapping("/home")
+	public String home() {
+		return "Home Page";
+	}
+
+	/**
+	 * Get all social media handles
+	 * @return list of all social handle
+	 */
+	@GetMapping("/socials")
+	public List<Socials> getSocials() {
+		return this.socialsService.getSocials();
+	}
+
+	/**
+	 * @param socialId Name for the desired social media
+	 * @return handle details for the required social media
+	 */
+	@GetMapping("/socials/{socialId}")
+	public Socials getSocials(@PathVariable String socialId) {
+		return this.socialsService.getSocials(socialId);
+	}
+
+	/**
+	 * can also use , (path = "/socials", consumes = "application/json") in mapping
+	 * @param socials new social media handle
+	 * @return social media handle that is created
+	 */
+	@PostMapping(path = "/socials")
+	public Socials addSocials(@RequestBody Socials socials) {
+		return this.socialsService.addSocials(socials);
+	}
+
+}

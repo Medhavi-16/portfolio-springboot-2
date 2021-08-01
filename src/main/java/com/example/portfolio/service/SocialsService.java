@@ -14,7 +14,7 @@ public interface SocialsService {
 
 	public Socials updateSocials(Socials socials);
 
-	public Socials deleteSocials(String socialId);
+	public void deleteSocials(String socialId);
 
 
 }

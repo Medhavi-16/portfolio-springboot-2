@@ -2,6 +2,8 @@ package com.example.portfolio.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.example.portfolio.model.Socials;
 import com.example.portfolio.service.SocialsService;
@@ -29,14 +31,10 @@ public class SocialsServiceImpl implements SocialsService {
 
 	@Override
 	public Socials getSocials(String socialId) {
+		Optional<Socials> socialsOptional = socials.stream().filter(e -> e.getSocialName().equalsIgnoreCase(socialId)).findFirst();
 
-		for(Socials socials: this.socials)
-		{
-			if(socials.getSocialName().equalsIgnoreCase(socialId)) {
-				return socials;
-			}
-		}
-		return null;
+		return socialsOptional.orElse(null);
+
 	}
 
 	@Override
@@ -47,33 +45,20 @@ public class SocialsServiceImpl implements SocialsService {
 
 	@Override
 	public Socials updateSocials(Socials social) {
-		for(Socials socials: this.socials) {
+		Optional<Socials> socialsOptional = socials.stream().filter(e -> e.getSocialName().equals(social.getSocialName())).findFirst();
+		socialsOptional.map(e -> {
+			e.setSocialUsername(social.getSocialUsername());
+			e.setSocialBase(social.getSocialBase());
+			return e;
+		});
 
-			if(socials.getSocialName().equals(social.getSocialName()))
-			{
-				socials.setSocialBase(social.getSocialBase());
-				socials.setSocialUsername(social.getSocialUsername());
-				return socials;
-			}
-		}
-
-		return null;
+		return socialsOptional.orElse(null);
 	}
 
 	@Override
-	public Socials deleteSocials(String socialId) {
-		Socials deletedSocials = null;
-		for(Socials socials: this.socials)
-		{
-			if(socials.getSocialName().equalsIgnoreCase(socialId)) {
-				deletedSocials = socials;
-				break;
-			}
-		}
+	public void deleteSocials(String socialId) {
+		socials = socials.stream().filter(e -> !e.getSocialName().equalsIgnoreCase(socialId)).collect(Collectors.toList());
 
-		if(deletedSocials != null)
-			this.socials.remove(deletedSocials);
-
-		return  deletedSocials;
+		return;
 	}
 }

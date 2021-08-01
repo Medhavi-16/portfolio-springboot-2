@@ -2,7 +2,11 @@ package com.example.portfolio.controller;
 
 import java.util.List;
 
+import com.example.portfolio.model.Profile;
+import com.example.portfolio.model.Projects;
 import com.example.portfolio.model.Socials;
+import com.example.portfolio.service.ProfileService;
+import com.example.portfolio.service.ProjectsService;
 import com.example.portfolio.service.SocialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,13 +25,19 @@ public class PortfolioController {
 	@Autowired
 	private SocialsService socialsService;
 
+	@Autowired
+	private ProfileService profileService;
+
+	@Autowired
+	private ProjectsService projectsService;
+
 	/**
 	 * This is the landing page
 	 * @return
 	 */
 	@GetMapping("/home")
-	public String home() {
-		return "Home Page";
+	public Profile home() {
+		return profileService.getProfile();
 	}
 
 	/**
@@ -82,7 +92,51 @@ public class PortfolioController {
 		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
+	@GetMapping("/projects")
+	public List<Projects> getProjects() {
+		return this.projectsService.getProjects();
+	}
+
+	@GetMapping("/projects/{projectId}")
+	public Projects getProject(@PathVariable String projectId) {
+		return this.projectsService.getProject(projectId);
+	}
+
+	@PostMapping("/projects")
+	public Projects addProject(@RequestBody Projects project) {
+		return  this.projectsService.addProject(project);
+	}
+
+	@PutMapping("/projects")
+	public Projects updateProject(@RequestBody Projects project) {
+		return  this.projectsService.updateProject(project);
+	}
+
+	@DeleteMapping("/projects/{projectId}")
+	public ResponseEntity<HttpStatus> deleteProject(@PathVariable String projectId) {
+		try {
+			this.projectsService.deleteProject(projectId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/about")
+	public Profile addProfile(@RequestBody Profile profile) {
+		return profileService.addProfile(profile);
+	}
+
+	@PutMapping("/about")
+	public Profile updateProfile(@RequestBody Profile profile) {
+		return profileService.updateProfile(profile);
+	}
+
+	@PutMapping("/about/description={description}")
+	public Profile updateDescription(@PathVariable String description) {
+		return profileService.updateProfile("description", description);
+	}
 }

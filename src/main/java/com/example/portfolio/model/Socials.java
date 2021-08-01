@@ -1,7 +1,12 @@
 package com.example.portfolio.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Socials {
 
+	@Id
 	private String socialName;
 	private String socialBase;
 	private String socialUsername;

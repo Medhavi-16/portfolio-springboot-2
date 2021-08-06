@@ -14,6 +14,6 @@ public interface ProjectsService {
 
 	public Projects updateProject(Projects project);
 
-	public void deleteProject(String id);
+	public Projects deleteProject(String id);
 
 }

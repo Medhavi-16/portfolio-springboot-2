@@ -2,6 +2,7 @@ package com.example.portfolio.service.impl;
 
 import javax.swing.text.html.Option;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.example.portfolio.dao.ProfileDao;
@@ -18,26 +19,27 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Override
 	public Profile getProfile() {
-		return dao.findAll().get(0);
+		List<Profile> profileList = dao.getAll();
+		if(!profileList.isEmpty())
+			return profileList.get(0);
+		return null;
 	}
 
 	@Override
 	public Profile addProfile(Profile profile) {
-		dao.save(profile);
-		return profile;
+		return dao.createOrUpdate(profile);
 	}
 
 	@Override
 	public Profile updateProfile(Profile profile) {
-		dao.save(profile);
-		return profile;
+		return dao.createOrUpdate(profile);
 	}
 
 	@Override
 	public Profile updateProfile(String param, String value) {
 
-		Optional<Profile> optionalProfile = updateParam(param, value, dao.findAll().get(0));
-		optionalProfile.ifPresent(profile -> dao.save(profile));
+		Optional<Profile> optionalProfile = updateParam(param, value, dao.getAll().get(0));
+		optionalProfile.ifPresent(profile -> dao.createOrUpdate(profile));
 		return optionalProfile.get();
 	}
 

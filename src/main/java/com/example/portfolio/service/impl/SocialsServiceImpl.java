@@ -26,12 +26,12 @@ public class SocialsServiceImpl implements SocialsService {
 	public SocialsServiceImpl() {
 		socials = new ArrayList<>();
 
-		socials.add(new Socials("Github", "www.github.com", "Medhavi-16"));
+		//socials.add(new Socials("Github", "www.github.com", "Medhavi-16"));
 	}
 
 	@Override
 	public List<Socials> getSocials() {
-		return socialsDao.findAll();
+		return socialsDao.getAll();
 	}
 
 	@Override
@@ -40,15 +40,14 @@ public class SocialsServiceImpl implements SocialsService {
 //
 //		return socialsOptional.orElse(null);
 
-		return socialsDao.findById(socialId).orElse(null);
+		return socialsDao.get(socialId);
 
 	}
 
 	@Override
 	public Socials addSocials(Socials socials) {
 		//this.socials.add(socials);
-		socialsDao.save(socials);
-		return socials;
+		return socialsDao.createOrUpdate(socials);
 	}
 
 	@Override
@@ -60,17 +59,13 @@ public class SocialsServiceImpl implements SocialsService {
 //			return e;
 //		});
 
-		socialsDao.save(social);
-
-		return social;
+		return socialsDao.createOrUpdate(social);
 	}
 
 	@Override
-	public void deleteSocials(String socialId) {
+	public Socials deleteSocials(String socialId) {
 		//socials = socials.stream().filter(e -> !e.getSocialName().equalsIgnoreCase(socialId)).collect(Collectors.toList());
 
-		socialsDao.deleteById(socialId);
-
-		return;
+		return socialsDao.delete(socialId);
 	}
 }

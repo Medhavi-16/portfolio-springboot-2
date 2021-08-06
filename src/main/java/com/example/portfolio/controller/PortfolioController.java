@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.example.portfolio.model.Profile;
 import com.example.portfolio.model.Projects;
+import com.example.portfolio.model.SocialMedia;
 import com.example.portfolio.model.Socials;
 import com.example.portfolio.service.ProfileService;
 import com.example.portfolio.service.ProjectsService;
+import com.example.portfolio.service.SocialMediaService;
 import com.example.portfolio.service.SocialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,9 @@ public class PortfolioController {
 
 	@Autowired
 	private ProjectsService projectsService;
+
+	@Autowired
+	private SocialMediaService socialMediaService;
 
 	/**
 	 * This is the landing page
@@ -138,5 +143,15 @@ public class PortfolioController {
 	@PutMapping("/about/description={description}")
 	public Profile updateDescription(@PathVariable String description) {
 		return profileService.updateProfile("description", description);
+	}
+
+	@GetMapping("/socialmedia")
+	public List<SocialMedia> getSocialMedia() {
+		return this.socialMediaService.get();
+	}
+
+	@PostMapping("/socialmedia")
+	public SocialMedia createSocialMedia(@RequestBody SocialMedia socialMedia) {
+		return this.socialMediaService.create(socialMedia);
 	}
 }

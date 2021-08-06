@@ -2,22 +2,14 @@ package com.example.portfolio.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 public class Socials {
 
 	@Id
 	private String socialName;
-	private String socialBase;
 	private String socialUsername;
-
-	public void setSocialBase(String socialBase) {
-		this.socialBase = socialBase;
-	}
-
-	public String getSocialBase() {
-		return socialBase;
-	}
 
 	public void setSocialName(String socialName) {
 		this.socialName = socialName;
@@ -35,10 +27,9 @@ public class Socials {
 		return socialUsername;
 	}
 
-	public Socials(String socialName, String socialBase, String socialLink) {
+	public Socials(String socialName, String socialLink) {
 		super();
 		this.socialName = socialName;
-		this.socialBase = socialBase;
 		this.socialUsername = socialLink;
 	}
 
@@ -50,7 +41,6 @@ public class Socials {
 	public String toString() {
 		return "Socials{" +
 				"socialName='" + socialName + '\'' +
-				", socialBase='" + socialBase + '\'' +
 				", socialUsername='" + socialUsername + '\'' +
 				'}';
 	}

@@ -18,29 +18,26 @@ public class ProjectsServiceImpl implements ProjectsService {
 
 	@Override
 	public List<Projects> getProjects() {
-		return dao.findAll();
+		return dao.getAll();
 	}
 
 	@Override
 	public Projects getProject(String id) {
-		return dao.findById(id).orElse(null);
+		return dao.get(id);
 	}
 
 	@Override
 	public Projects addProject(Projects project) {
-		dao.save(project);
-		return project;
+		return dao.createOrUpdate(project);
 	}
 
 	@Override
 	public Projects updateProject(Projects project) {
-		dao.save(project);
-		return project;
+		return dao.createOrUpdate(project);
 	}
 
 	@Override
-	public void deleteProject(String id) {
-		dao.deleteById(id);
-		return;
+	public Projects deleteProject(String id) {
+		return dao.delete(id);
 	}
 }
